@@ -75,7 +75,7 @@ public class ContactRecordFragment
         protected void onQueryComplete(int token, Object cookie, Cursor cursor) {
             ContactRecordFragment fragment = weakReference.get();
             if (cursor != null && cursor.getCount() > 0) {
-                SimpleDateFormat sfd = new SimpleDateFormat("yyyy-MM-dd\nhh:mm", Locale.CHINA);
+                SimpleDateFormat sfd = new SimpleDateFormat("yyyy-MM-dd\nHH:mm", Locale.CHINA);
                 cursor.moveToFirst();
                 for (int i = 0; i < cursor.getCount(); i++) {
                     cursor.moveToPosition(i);

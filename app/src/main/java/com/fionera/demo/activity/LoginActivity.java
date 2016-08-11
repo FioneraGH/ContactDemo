@@ -37,7 +37,7 @@ import com.fionera.demo.util.DisplayUtil;
 public class LoginActivity
         extends BaseActivity {
 
-    private static final String[] DUMMY_CREDENTIALS = new String[]{"hello@test.info:123456"};
+    private static final String[] DUMMY_CREDENTIALS = new String[]{"123456@:123456"};
     private UserLoginTask mAuthTask = null;
 
     private AutoCompleteTextView mEmailView;
@@ -137,6 +137,7 @@ public class LoginActivity
                     }
                 });
 
+        mProgressView.setVisibility(View.VISIBLE);
         mProgressView.animate().setDuration(shortAnimTime).alpha(show ? 1 : 0).translationY(
                 show ? BaseApplication.screenHeight / 4 : 0).setListener(
                 new AnimatorListenerAdapter() {
@@ -174,7 +175,7 @@ public class LoginActivity
                 }
             }
 
-            return true;
+            return false;
         }
 
         @Override
@@ -183,7 +184,7 @@ public class LoginActivity
             showProgress(false);
 
             if (success) {
-                startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                startActivity(new Intent(context, MainActivity.class));
                 finish();
             } else {
                 mPasswordView.setError(getString(R.string.error_incorrect_password));

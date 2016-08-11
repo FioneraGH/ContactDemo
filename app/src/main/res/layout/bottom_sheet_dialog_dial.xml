@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="?android:colorBackground"
+              android:orientation="vertical"
+              android:padding="16dp">
+
+    <TextView
+        android:id="@+id/tv_dial_number"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="22sp"
+        android:gravity="center"
+        android:maxLength="11"
+        tools:text="电话号码"/>
+
+    <GridLayout
+        android:id="@+id/bottom_sheet_grid_view"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_marginTop="8dp"
+        android:columnCount="3"
+        android:rowCount="4">
+
+        <TextView
+            style="@style/DialButton"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            android:text="1"/>
+
+        <TextView
+            style="@style/DialButton"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            android:text="2"/>
+
+        <TextView
+            style="@style/DialButton"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            android:text="3"/>
+
+        <TextView
+            style="@style/DialButton"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            android:text="4"/>
+
+        <TextView
+            style="@style/DialButton"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            android:text="5"/>
+
+        <TextView
+            style="@style/DialButton"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            android:text="6"/>
+
+        <TextView
+            style="@style/DialButton"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            android:text="7"/>
+
+        <TextView
+            style="@style/DialButton"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            android:text="8"/>
+
+        <TextView
+            style="@style/DialButton"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            android:text="9"/>
+
+        <TextView
+            style="@style/DialButton"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            android:background="@color/green"
+            android:text="C"/>
+
+        <TextView
+            style="@style/DialButton"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            android:text="0"/>
+
+        <TextView
+            style="@style/DialButton"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            android:background="@color/red"
+            android:text="D"/>
+
+    </GridLayout>
+
+</LinearLayout>
