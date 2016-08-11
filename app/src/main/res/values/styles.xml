@@ -1,0 +1,12 @@
+<resources>
+
+    <style name="AppBaseTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:colorAccent">@color/tomato</item>
+        <item name="android:colorPrimary">@color/tomato</item>
+        <item name="android:colorPrimaryDark">@color/tomato</item>
+    </style>
+
+    <style name="AppTheme" parent="AppBaseTheme">
+    </style>
+
+</resources>
