@@ -1,18 +1,11 @@
 package com.fionera.demo.adapter;
 
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.graphics.Color;
-import android.text.ClipboardManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.View.OnLongClickListener;
-import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -21,119 +14,79 @@ import com.fionera.demo.model.MessageBean;
 
 import java.util.List;
 
-public class MessageBoxListAdapter extends BaseAdapter {
+public class MessageBoxListAdapter
+        extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-	private List<MessageBean> mbList;
-	private Context ctx;
-	private LinearLayout layout_father;
-	private LayoutInflater vi;
-	private LinearLayout layout_child;
-	private TextView tvDate;
-	private TextView tvText;
+    private final int TYPE_OUT_INCOMING = 1000;
+    private final int TYPE_OUT_OUTGOING = 1001;
+    private List<MessageBean> list;
+    private Context context;
 
-	public MessageBoxListAdapter(Context context, List<MessageBean> coll) {
-		ctx = context;
-		vi = (LayoutInflater) ctx
-				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		this.mbList = coll;
-	}
+    public MessageBoxListAdapter(Context context, List<MessageBean> list) {
+        this.context = context;
+        this.list = list;
+    }
 
-	public int getCount() {
-		return mbList.size();
-	}
+    @Override
+    public int getItemViewType(int position) {
+        return (list.get(position).getType() == 1) ? TYPE_OUT_INCOMING : TYPE_OUT_OUTGOING;
+    }
 
-	public Object getItem(int position) {
-		return mbList.get(position);
-	}
+    @Override
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        RecyclerView.ViewHolder holder;
+        if (viewType == TYPE_OUT_INCOMING) {
+            holder = new MessageHolder(LayoutInflater.from(context)
+                    .inflate(R.layout.rv_message_incoming_item, parent, false));
+        } else {
+            holder = new MessageOutHolder(LayoutInflater.from(context)
+                    .inflate(R.layout.rv_message_outgoing_item, parent, false));
+        }
+        return holder;
+    }
 
-	public long getItemId(int position) {
-		return position;
-	}
+    @Override
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+        if(getItemViewType(position) == TYPE_OUT_INCOMING){
+            MessageHolder theHolder = (MessageHolder)holder;
+            theHolder.tvDetail.setText(list.get(position).getText());
+            theHolder.tvTime.setText(list.get(position).getDate());
+        }else{
+            MessageOutHolder theHolder = (MessageOutHolder)holder;
+            theHolder.tvDetail.setText(list.get(position).getText());
+            theHolder.tvTime.setText(list.get(position).getDate());
+        }
+    }
 
-	public View getView(int position, View convertView, ViewGroup parent) {
+    @Override
+    public int getItemCount() {
+        return list.size();
+    }
 
-		MessageBean mb = mbList.get(position);
-		int itemLayout = mb.getLayoutID();
-		layout_father = new LinearLayout(ctx);
-		vi.inflate(itemLayout, layout_father, true);
 
-		layout_father.setBackgroundColor(Color.TRANSPARENT);
-		layout_child = (LinearLayout) layout_father
-				.findViewById(R.id.layout_bj);
+    private class MessageHolder
+            extends RecyclerView.ViewHolder {
 
-		tvText = (TextView) layout_father
-				.findViewById(R.id.messagedetail_row_text);
-		tvText.setText(mb.getText());
+        TextView tvDetail;
+        TextView tvTime;
 
-		tvDate = (TextView) layout_father
-				.findViewById(R.id.messagedetail_row_date);
-		tvDate.setText(mb.getDate());
+        MessageHolder(View itemView) {
+            super(itemView);
+            tvDetail = (TextView) itemView.findViewById(R.id.tv_message_detail_row_text);
+            tvTime = (TextView) itemView.findViewById(R.id.tv_message_detail_row_date);
+        }
+    }
 
-		addListener(tvText, tvDate, layout_child, mb);
+    private class MessageOutHolder
+            extends RecyclerView.ViewHolder {
 
-		return layout_father;
-	}
+        TextView tvDetail;
+        TextView tvTime;
 
-	public void addListener(final TextView tvText, final TextView tvDate,
-			LinearLayout layout_bj, final MessageBean mb) {
-
-		layout_bj.setOnClickListener(new OnClickListener() {
-			public void onClick(View v) {
-
-			}
-		});
-
-		layout_bj.setOnLongClickListener(new OnLongClickListener() {
-			public boolean onLongClick(View v) {
-				tvText.setTextColor(0xffffffff);
-				showListDialog(newtan, mb);
-				return true;
-			}
-		});
-
-		layout_bj.setOnTouchListener(new OnTouchListener() {
-			public boolean onTouch(View v, MotionEvent event) {
-				switch (event.getAction()) {
-
-				case MotionEvent.ACTION_DOWN:
-
-				case MotionEvent.ACTION_MOVE:
-					tvText.setTextColor(0xffffffff);
-					break;
-
-				default:
-					tvText.setTextColor(Color.BLACK);
-					break;
-				}
-				return false;
-			}
-		});
-	}
-
-	private String[] newtan = new String[] { "ת��", "�����ı�����", "ɾ��", "��ѯ��Ϣ����" };
-
-	private void showListDialog(final String[] arg, final MessageBean mb) {
-		new AlertDialog.Builder(ctx).setTitle("��Ϣѡ��")
-				.setItems(arg, new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dialog, int which) {
-						switch (which) {
-
-						case 0:
-							break;
-
-						case 1:
-							ClipboardManager cmb = (ClipboardManager) ctx
-									.getSystemService(ctx.CLIPBOARD_SERVICE);
-							cmb.setText(mb.getText());
-							break;
-						case 2:
-
-							break;
-						case 3:
-							break;
-						}
-						;
-					}
-				}).show();
-	}
+        MessageOutHolder(View itemView) {
+            super(itemView);
+            tvDetail = (TextView) itemView.findViewById(R.id.tv_message_detail_row_text);
+            tvTime = (TextView) itemView.findViewById(R.id.tv_message_detail_row_date);
+        }
+    }
 }

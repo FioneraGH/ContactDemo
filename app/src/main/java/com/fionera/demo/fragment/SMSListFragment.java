@@ -10,7 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.fionera.demo.R;
-import com.fionera.demo.activity.MessageBoxList;
+import com.fionera.demo.activity.MessageBoxActivity;
 import com.fionera.demo.adapter.SMSAdapter;
 import com.fionera.demo.model.SMSBean;
 import com.fionera.demo.util.TrackSMS;
@@ -52,7 +52,7 @@ public class SMSListFragment
             @Override
             public void onClick(View view, int pos) {
                 SMSBean smsBean = list.get(pos);
-                context.startActivity(new Intent(context, MessageBoxList.class)
+                context.startActivity(new Intent(context, MessageBoxActivity.class)
                         .putExtra("phoneNumber", smsBean.getAddress())
                         .putExtra("threadId", smsBean.getThread_id()));
             }

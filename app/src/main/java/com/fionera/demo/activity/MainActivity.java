@@ -6,14 +6,20 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AlertDialog;
+import android.view.SearchEvent;
 import android.view.View;
 import android.view.animation.OvershootInterpolator;
+import android.widget.EditText;
 
 import com.fionera.demo.BaseApplication;
 import com.fionera.demo.R;
 import com.fionera.demo.adapter.MainPageAdapter;
 import com.fionera.demo.util.DisplayUtil;
+import com.fionera.demo.util.MessageEvent;
 import com.fionera.demo.view.BottomSheetDialogView;
+
+import org.greenrobot.eventbus.EventBus;
 
 public class MainActivity
         extends BaseActivity
@@ -60,6 +66,25 @@ public class MainActivity
                     fabMainPage.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
+                            final EditText etSearch = new EditText(context);
+                            new AlertDialog.Builder(context).setView(etSearch).setTitle("请输入搜索内容").setPositiveButton(
+                                    "搜索", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialogInterface,
+                                                            int i) {
+                                            dialogInterface.dismiss();
+                                            EventBus.getDefault().post(new MessageEvent.SearchEvent(
+                                                    etSearch.getText().toString()));
+                                        }
+                                    }).setNegativeButton("取消",
+                                    new DialogInterface.OnClickListener() {
+
+                                        @Override
+                                        public void onClick(DialogInterface dialogInterface,
+                                                            int i) {
+                                            dialogInterface.dismiss();
+                                        }
+                                    }).show();
 
                         }
                     });

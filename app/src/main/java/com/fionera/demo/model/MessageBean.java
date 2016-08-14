@@ -5,17 +5,14 @@ public class MessageBean{
 	private String name;
 	private String date;
 	private String text;
-	private int layoutID;
+	private int type;
 
-	public MessageBean(){
-	}
-	
-	public MessageBean(String name, String date, String text, int layoutID){
+	public MessageBean(String name, String date, String text, int type){
 		super();
 		this.name = name;
 		this.date = date;
 		this.text = text;
-		this.layoutID = layoutID;
+		this.type = type;
 	}
 	
 	public String getName(){
@@ -42,11 +39,11 @@ public class MessageBean{
 		this.text = text;
 	}
 
-	public int getLayoutID(){
-		return layoutID;
+	public int getType(){
+		return type;
 	}
 
-	public void setLayoutID(int layoutID){
-		this.layoutID = layoutID;
+	public void setType(int type){
+		this.type = type;
 	}
 }
